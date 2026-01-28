@@ -1,5 +1,4 @@
 import { useState } from "react";
-import API from "../services/api";
 
 export default function AddExpense() {
   const [amount, setAmount] = useState("");
@@ -12,12 +11,6 @@ export default function AddExpense() {
       alert("All fields required");
       return;
     }
-
-    await API.post("/expenses", {
-      amount,
-      category,
-    });
-
     setAmount("");
     setCategory("");
     alert("Expense Added");

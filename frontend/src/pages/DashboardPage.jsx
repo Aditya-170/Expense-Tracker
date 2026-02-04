@@ -1,6 +1,3 @@
-// ========================================
-// DASHBOARD PAGE
-// ========================================
 
 import React, { useState, useEffect } from 'react';
 import { addExpense, getExpenses } from '../api';
@@ -20,7 +17,7 @@ const DashboardPage = ({ user, onLogout }) => {
     const fetchExpenses = async () => {
       setLoadingExpenses(true);
       try {
-        const data = await getExpenses(user.userId);
+        const data = await getExpenses(user.email);
         setExpenses(data);
       } catch (err) {
         setError('Failed to load expenses');
@@ -30,7 +27,7 @@ const DashboardPage = ({ user, onLogout }) => {
     };
 
     fetchExpenses();
-  }, [user.userId]);
+  }, [user.email]);
 
   // Handle add expense form submission
   const handleAddExpense = async (e) => {
@@ -45,7 +42,7 @@ const DashboardPage = ({ user, onLogout }) => {
       }
 
       // Call add expense API
-      const newExpense = await addExpense(user.userId, title, amount);
+      const newExpense = await addExpense(user.email, title, amount);
 
       // Add the new expense to the list
       setExpenses([newExpense, ...expenses]);

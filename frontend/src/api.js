@@ -19,7 +19,9 @@ export const loginUser = async (email, password) => {
 export const signupUser = async (email, password) => {
   try {
     const response = await api.post('/signup', { email, password });
+    console.log(response.data);
     return response.data; // { userId, email }
+
   } catch (error) {
     throw error.response?.data?.error || 'Signup failed';
   }

@@ -1,20 +1,20 @@
 // ========================================
-// DATABASE CONNECTION (Neon PostgreSQL)
+// DATABASE CONNECTION (Docker PostgreSQL)
 // ========================================
 
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Create a connection pool to Neon PostgreSQL
-// You need to set DATABASE_URL in your .env file
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
-  ssl: { rejectUnauthorized: false }, // Required for Neon
+  host: process.env.DB_HOST,      // postgres
+  user: process.env.DB_USER,      // postgres
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: 5432,
 });
 
-// Test the connection
 pool.on('connect', () => {
-  console.log('✓ Connected to Neon PostgreSQL');
+  console.log('✓ Connected to PostgreSQL (Docker)');
 });
 
 pool.on('error', (err) => {

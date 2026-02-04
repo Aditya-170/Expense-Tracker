@@ -1,20 +1,12 @@
-// ========================================
-// API HELPER - Makes HTTP requests to backend
-// ========================================
 
 import axios from 'axios';
 
-// Backend URL - change if your backend runs on a different port
 const API_BASE_URL = 'http://localhost:5000/api';
 
-// Create an axios instance with base URL
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// ========================================
-// LOGIN: Send email and password
-// ========================================
 export const loginUser = async (email, password) => {
   try {
     const response = await api.post('/login', { email, password });
@@ -24,9 +16,6 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// ========================================
-// SIGNUP: Create a new user account
-// ========================================
 export const signupUser = async (email, password) => {
   try {
     const response = await api.post('/signup', { email, password });
@@ -39,28 +28,25 @@ export const signupUser = async (email, password) => {
 // ========================================
 // ADD EXPENSE: Create a new expense
 // ========================================
-export const addExpense = async (userId, title, amount) => {
+export const addExpense = async (email, title, amount) => {
   try {
     const response = await api.post('/add-expense', {
-      userId,
+      email,
       title,
       amount,
     });
-    return response.data; // { id, user_id, title, amount, created_at }
+    return response.data; 
   } catch (error) {
     throw error.response?.data?.error || 'Failed to add expense';
   }
 };
 
-// ========================================
-// GET EXPENSES: Fetch all expenses for a user
-// ========================================
-export const getExpenses = async (userId) => {
+export const getExpenses = async (email) => {
   try {
     const response = await api.get('/expenses', {
-      params: { userId },
+      params: { email },
     });
-    return response.data; // [{ id, title, amount, created_at }, ...]
+    return response.data;
   } catch (error) {
     throw error.response?.data?.error || 'Failed to fetch expenses';
   }

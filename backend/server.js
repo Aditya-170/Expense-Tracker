@@ -2,11 +2,11 @@
 // EXPRESS SERVER
 // ========================================
 
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
-const routes = require('./routes');
+const routes = require("./routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,14 +16,14 @@ app.use(cors()); // Allow requests from React frontend (localhost:3000)
 app.use(express.json()); // Parse JSON request bodies
 
 // Routes
-app.use('/api', routes);
+app.use("/api", routes);
 
 // Health check endpoint
-app.get('/', (req, res) => {
-  res.json({ message: 'Expense Tracker API is running' });
+app.get("/", (req, res) => {
+  res.json({ message: "Expense Tracker API is running" });
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`✓ Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✓ Server running on port ${PORT}`);
 });

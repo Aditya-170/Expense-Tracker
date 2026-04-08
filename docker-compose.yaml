@@ -1,38 +1,36 @@
 services:
   postgres:
     image: postgres:15
-    container_name: expense_postgres
+    container_name: expense_postgres_deployed
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
+    image: ujjwal3217/expense-backend:latest   
+    container_name: expense_backend_deployed
     ports:
       - "5000:5000"
     env_file:
-      - ./backend/.env
+     - ./.env                              
     depends_on:
       - postgres
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
+    restart: always
 
   frontend:
-    build: ./frontend
+    image: ujjwal3217/expense-frontend:latest  
+    container_name: expense_frontend_deployed
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+    restart: always
 
 volumes:
   postgres_data:
